@@ -1,0 +1,24 @@
+/* ESTILO CHECKBOX ------------------------------------------------------------------*/
+.custom-control-label:before{
+    background-color:white;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+    background-color:#1DB954;
+}
+
+
+/* ESTILO RADIO BUTTONS ------------------------------------------------------------------*/
+.custom-radio .custom-control-input:checked~.custom-control-label::before{
+    background-color:#1DB954;
+}
+
+
+.errorForm {
+    background-color: #FFFF93;
+}
+
+/* OCULTAMOS LAS FILAS DE LA TABLA ------------------------------------------------------------------*/
+.invisible{
+    display:none;
+}

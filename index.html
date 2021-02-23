@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<!-- Plantilla inicial de Bootstrap 4 -->
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Plantilla básica para Bootstrap">
+  <meta name="author" content="Parzibyte">
+  <title>Inicia Sesión</title>
+
+  <style>
+    fieldset{
+      display: none;
+  }
+  </style>
+
+  <!-- Cargar estilos propios -->
+  <link href="styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <script src="js/jquery.min.js"></script>
+  <!-- Cargar el CSS de Boostrap-->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Cargar jQuery y librerías JS necesarias. Si solo quieres el diseño, no las cargues -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+  <header>
+    <!-- NAVEGADOR --------------------------------------------------------------------------------------------------------------->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="img/Spotify_Logo_RGB_White.png" alt="logotipoSpotify">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="buscador">Buscador</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="playlist">Playlist</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="suscripciones">Suscripciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="inicioSesion">Inicia Sesión</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="cerrarSesion">Cerrar Sesión</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- NAVEGADOR --------------------------------------------------------------------------------------------------------------->
+
+
+  <main role="main" class="container">
+    <div class="home" style="margin-top: 50px;">
+      <fieldset id="fsHome"></fieldset>
+    </div>
+    <div class="formularios" style="margin-top: 50px;">
+    <!-- FORMULARIO BUSCAR CANCION -->
+      <fieldset id="formularioBuscador">
+        <h3>Busca una canción</h3>
+        <form name="formBuscador" id="formBuscador">
+          <label for="txtTitulo">Título:</label>
+          <input type="text" name="txtTitulo">
+          <input type="button" class="btn btn-success" name="btnBuscarCancion" id="btnBuscarCancion" value="Aceptar">
+        </form>
+        <hr>
+        <div id="resultadoBusqueda"></div>
+      </fieldset>
+    <!-- FORMULARIO INICIO SESION -->
+      <fieldset id="formularioInicioSesion">
+        <div class="col-md-6 offset-md-3">
+          <form name="formInicioSesion">
+            <h5>Inicia Sesión</h5>
+            <div class="form-group row mt-5">
+              <label class="col-4 col-form-label" for="usuario">Correo electrónico</label>
+              <div class="col-8">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fa fa-at"></i>
+                    </div>
+                  </div>
+                  <input id="emailIni" name="emailIni" placeholder="Correo electrónico" type="text" class="form-control"
+                    required="required">
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="password" class="col-4 col-form-label">Contraseña</label>
+              <div class="col-8">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fa fa-lock"></i>
+                    </div>
+                  </div>
+                  <input id="passwordIni" name="passwordIni" placeholder="Contraseña" type="password" required="required"
+                    class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="offset-4 col-8">
+                <input name="submit" class="btn btn-success" value="Acceder" type="button" id="btnInicioSesion" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </fieldset>
+
+      <!-- FORMULARIO ALTA CLIENTE -->
+      <fieldset id="formularioSuscripcion">
+        <div class="col-md-6 offset-md-3">
+        <form name="formSuscripcion">
+          <h5>Rellena el Formulario de Suscripción</h5>
+          <div class="form-group row mt-5">
+            <label for="nombre" class="col-4 col-form-label">Nombre</label>
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </div>
+                </div>
+                <input id="nombre" name="nombre" placeholder="Introduce tu nombre" type="text" required="required"
+                  class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-4 col-form-label">Correo electrónico</label>
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-at"></i>
+                  </div>
+                </div>
+                <input id="email" name="email" placeholder="Correo electrónico" type="text" required="required"
+                  class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="password" class="col-4 col-form-label">Contraseña</label>
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-lock"></i>
+                  </div>
+                </div>
+                <input id="password" name="password" placeholder="Contraseña" type="password" class="form-control"
+                  required="required">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="password2" class="col-4 col-form-label">Confirma tu contraseña</label>
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-lock"></i>
+                  </div>
+                </div>
+                <input id="password2" name="password2" placeholder="Confirma tu contraseña" type="password"
+                  class="form-control" required="required">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4"></div>
+            <div class="col-8">
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input name="checkboxPremium" id="checkboxPremium_0" type="checkbox" class="custom-control-input"
+                  value="premium" aria-describedby="checkboxPremiumHelpBlock">
+                <label for="checkboxPremium_0" class="custom-control-label">Premium</label>
+              </div>
+              <span id="checkboxPremiumHelpBlock" class="form-text text-muted">Selecciona Premium para disfrutar esta
+                suscripción</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-4 col-8">
+              <input name="submit" class="btn btn-success" value="Suscribirse" type="button" id="btnSuscripcion" />
+              <button name="submit" type="reset" class="btn btn-danger">Cancelar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      </fieldset>
+
+      <!-- FORM ALTA PLAYLIST -->
+      <fieldset id="formularioCrearPlaylist">
+        <div class="col-md-6 offset-md-3">
+        <form name="formCrearPlaylist">
+          <h5>Crea tus Playlist</h5>
+          <div class="form-group row mt-5">
+            <label for="nombrePlayList" class="col-4 col-form-label">Nombre</label>
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-music"></i>
+                  </div>
+                </div>
+                <input id="nombrePlayList" name="nombrePlayList" placeholder="Introduce el nombre de tu Playlist" type="text"
+                  required="required" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-4 col-form-label" for="comboCrearCanciones">Canciones</label>
+            <div class="col-8">
+              <select id="comboCrearCanciones" name="comboCrearCanciones" class="custom-select"
+                aria-describedby="comboCrearCancionesHelpBlock" required="required" multiple="multiple">
+              </select>
+              <span id="comboCrearCancionesHelpBlock" class="form-text text-muted">Selecciona las canciones para tu
+                Playlist</span>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="offset-8 col-8">
+              <button name="submit" type="button" class="btn btn-success" id="btnAñadirCancion">Añadir a playlist</button>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-4 col-form-label" for="comboCrearPlaylist">Tu Playlist</label>
+            <div class="col-8">
+              <select id="comboCrearPlaylist" name="comboCrearPlaylist" class="custom-select"
+                aria-describedby="comboCrearPlaylistHelpBlock" required="required" multiple="multiple">
+
+              </select>
+              <span id="comboCrearPlaylistHelpBlock" class="form-text text-muted">Estas son las canciones en tu
+                Playlist</span>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="offset-8 col-8">
+              <button name="submit" type="button" class="btn btn-danger" id="btnEliminarCancion">Eliminar de playlist</button>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="offset-4 col-8">
+              <input name="submit" class="btn btn-success" value="Crear" type="button" id="btnCrearPlaylist" />
+              <button name="submit" type="reset" class="btn btn-danger">Cancelar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      </fieldset>
+    </div>
+
+    <div id="resultado" style="margin-top: 50px;"></div>
+  </main>
+
+
+  <!-- SCRIPTS ----------------------------------------------------------------------------------------->
+  <script type="text/javascript" src="js/index.js"></script>
+
+</body>
+
+</html>
