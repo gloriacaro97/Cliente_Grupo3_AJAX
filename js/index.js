@@ -1,6 +1,6 @@
-// **************************************************************
+// *******************************************************************************************************************************************************
 // CÓDIGO PARA CARGAR FORMULARIOS
-// **************************************************************
+// *******************************************************************************************************************************************************
 abrirHome();
 
 $("#home").click(abrirHome);
@@ -75,9 +75,13 @@ function abrirInicioSesion(){
     }
 }
 
-// **************************************************************
+
+
+
+
+// *******************************************************************************************************************************************************
 // CÓDIGO PARA HOME
-// **************************************************************
+// *******************************************************************************************************************************************************
 
 // Datos Usuario
 function peticionDatosUsuario() {
@@ -270,12 +274,15 @@ function procesarGetPlaylist(oDatos) {
 }
 
 
-// **************************************************************
+
+
+
+// *******************************************************************************************************************************************************
 // CÓDIGO PARA MOSTRAR LA CANCIÓN BUSCADA
-// **************************************************************
+// *******************************************************************************************************************************************************
 
 function cargarDatosBuscador() {
-    $.get("php/getDatosClientes.php",
+    $.get("php/getDatosCanciones.php",
         $("#formBuscador").serialize(),
         respuestaDatosBuscador,
         'json');
@@ -310,10 +317,101 @@ function respuestaDatosBuscador(oDatos, sStatus, oXHR) {
     }
 }
 
-// **************************************************************
+
+
+
+
+// *******************************************************************************************************************************************************
 // CÓDIGO PARA ALTA CLIENTE
-// **************************************************************
-$("#btnSuscripcion").click(function(){
+// *******************************************************************************************************************************************************
+$("#btnSuscripcion").click(validarFormularioAltaCliente);
+
+function validarFormularioAltaCliente() {
+
+    let sErrores = "";
+    let bValido = true; // en principio el formulario es válido
+
+    // Validación Nombre Usuario
+    let sNombreUsuario = formSuscripcion.nombre.value.trim();
+    let oExpRegNomUs = /^[A-Za-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑ]{5,10}$/;
+
+    if (!oExpRegNomUs.test(sNombreUsuario)) {
+        bValido = false;
+        sErrores = "\n- El Nombre de usuario no tiene el formato definido";
+        formSuscripcion.nombre.classList.add("errorForm");
+        formSuscripcion.nombre.focus();
+    } else {
+        formSuscripcion.nombre.classList.remove("errorForm");
+    }
+
+    // Validación email 1
+    let sEmail = formSuscripcion.email.value.trim();
+    let oExpRegEm = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (!oExpRegEm.test(sEmail)) {
+        if (bValido) {
+            formSuscripcion.email.focus();
+            bValido = false;
+        }
+        sErrores += "\n- El email no es válido";
+        formSuscripcion.email.classList.add("errorForm");
+    } else {
+        formSuscripcion.email.classList.remove("errorForm");
+    }
+
+    // Validación contraseña 1
+    let sPass1 = formSuscripcion.password.value.trim();
+    let oExpRegPass = /^(?=(?:.*\d))(?=(?:.*[A-Z]))(?=(?:.*[a-z]))\S{5,10}$/;
+
+    if (!oExpRegPass.test(sPass1)) {
+        // Si hasta el momento era correcto -> este el primer error
+        if (bValido) {
+            formSuscripcion.password.focus();
+            bValido = false;
+        }
+        sErrores += "\n- La contraseña no tiene el formato correcto (de 5 a 10 caracteres)";
+        formSuscripcion.password.classList.add("errorForm");
+    } else {
+        formSuscripcion.password.classList.remove("errorForm");
+    }
+
+    // Validación contraseña 2 
+    let sPass2 = formSuscripcion.password2.value.trim();
+
+    if (!oExpRegPass.test(sPass2)) {
+        if (bValido) {
+            formSuscripcion.password2.focus();
+            bValido = false;
+        }
+        sErrores += "\n- La confirmación de contraseña no tiene el formato correcto (de 5 a 10 caracteres)";
+        formSuscripcion.password2.classList.add("errorForm");
+    } else {
+        formSuscripcion.password2.classList.remove("errorForm");
+    }
+
+    // Validación de que las dos contraseñas son iguales -----------------------------------------------------------
+    if (sPass1 != sPass2) {
+        formSuscripcion.password2.focus();
+        bValido = false;
+        sErrores += "\n- Las contraseñas no coinciden";
+        formSuscripcion.password2.classList.add("errorForm");
+    } else {
+        //alert("Las contraseñas son iguales");
+        formSuscripcion.password2.classList.remove("errorForm");
+    }
+
+    // --------------------------------------------------------------
+    // COMPROBACIÓN FINAL
+    if (bValido) { // Si todo OK
+        altaCliente();
+    } else {
+        //generamos el alert -------
+        alert(sErrores);
+    }
+
+}
+
+function altaCliente(){
     var oCliente = {
         nombre: formSuscripcion.nombre.value.trim(),
         email: formSuscripcion.email.value.trim(),
@@ -330,7 +428,7 @@ $("#btnSuscripcion").click(function(){
     var sParametros = "datosCliente=" + JSON.stringify(oCliente);
 
     $.post("altaCliente/altaCliente.php", sParametros, respuestaAltaCliente, "json");
-});
+}
 
 function respuestaAltaCliente(oDatos, sStatus, oXHR){
     if(oDatos.error){
@@ -342,9 +440,13 @@ function respuestaAltaCliente(oDatos, sStatus, oXHR){
     }
 }
 
-// **************************************************************
+
+
+
+
+// *******************************************************************************************************************************************************
 // CÓDIGO PARA ALTA PLAYLIST
-// **************************************************************
+// *******************************************************************************************************************************************************
 document.getElementById("btnAñadirCancion").addEventListener("click", añadirCanciones);
 document.getElementById("btnEliminarCancion").addEventListener("click", eliminarCanciones);
 
@@ -411,7 +513,51 @@ function eliminarCanciones() {
     }
 }
 
-$("#btnCrearPlaylist").click(function(){
+$("#btnCrearPlaylist").click(validarFormularioCrearPlaylist);
+
+function validarFormularioCrearPlaylist() {
+
+    let sErrores = "";
+    let bValido = true; // en principio el formulario es válido
+
+    // Validación Nombre Playlist
+    let sNombrePlaylist = formCrearPlaylist.nombrePlayList.value.trim();
+    let oExpRegNomPlaylist = /^[A-Za-zàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑ]{5,30}$/;
+
+    if (!oExpRegNomPlaylist.test(sNombrePlaylist)) {
+        bValido = false;
+        sErrores = "\n- El Nombre de la playlist no es válido";
+        formCrearPlaylist.nombrePlayList.classList.add("errorForm");
+        formCrearPlaylist.nombrePlayList.focus();
+    } else {
+        formCrearPlaylist.nombrePlayList.classList.remove("errorForm");
+    }
+
+    // Validación Canciones Añadidas
+    let sComboPlaylist = document.getElementById('comboCrearPlaylist');
+
+    if (sComboPlaylist.options.length == 0) {
+        bValido = false;
+        sErrores = "\n- Debe añadir al menos una canción";
+        formCrearPlaylist.comboCrearPlaylist.classList.add("errorForm");
+        formCrearPlaylist.comboCrearPlaylist.focus();
+    } else {
+        formCrearPlaylist.comboCrearPlaylist.classList.remove("errorForm");
+    }
+
+    // --------------------------------------------------------------
+    // COMPROBACIÓN FINAL
+    if (bValido) { // Si todo OK
+       //alert("El formulario se ha rellenado correctamente");
+       altaPlaylist();
+    } else {
+        //generamos el alert -------
+        alert(sErrores);
+    }
+
+}
+
+function altaPlaylist(){
     var listaCanciones = [];
     var opciones = document.getElementById("comboCrearPlaylist").options;
     for(var i = 0; i < opciones.length; i++){
@@ -427,7 +573,7 @@ $("#btnCrearPlaylist").click(function(){
     var sParametros = "datosPlaylist=" + JSON.stringify(oPlaylist);
 
     $.post("altaPlaylist/altaPlaylist.php", sParametros, respuestaAltaPlaylist, "json");
-});
+}
 
 function respuestaAltaPlaylist(oDatos, sStatus, oXHR){
     if(oDatos.error){
@@ -448,10 +594,63 @@ function limpiarComboCrearPlaylist() {
     }
 }
 
-// **************************************************************
+
+
+
+
+// *******************************************************************************************************************************************************
 // CÓDIGO PARA INICIO SESIÓN
-// **************************************************************
-$("#btnInicioSesion").click(function(){
+// *******************************************************************************************************************************************************
+$("#btnInicioSesion").click(validarFormularioIniSesion);
+
+// VALIDACIÓN FORMULARIO INICIO DE SESIÓN *********
+function validarFormularioIniSesion() {
+    let sErrores = "";
+    let bValido = true; // en principio el formulario es válido
+
+    // Validación email 1
+    let sEmail = formInicioSesion.emailIni.value.trim();
+    let oExpRegEm = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (!oExpRegEm.test(sEmail)) {
+        if (bValido) {
+            formInicioSesion.emailIni.focus();
+            bValido = false;
+        }
+        sErrores += "\n- El email no es válido";
+        formInicioSesion.emailIni.classList.add("errorForm");
+    } else {
+        formInicioSesion.emailIni.classList.remove("errorForm");
+    }
+
+
+    // Validación contraseña 
+    let sPass = formInicioSesion.passwordIni.value.trim();
+    let oExpRegPass = /^(?=(?:.*\d))(?=(?:.*[A-Z]))(?=(?:.*[a-z]))\S{5,10}$/;
+
+    if (!oExpRegPass.test(sPass)) {
+        // Si hasta el momento era correcto -> este el primer error
+        if (bValido) {
+            formInicioSesion.passwordIni.focus();
+            bValido = false;
+        }
+        sErrores += "\n- La contraseña no tiene el formato correcto (de 5 a 10 caracteres)";
+        formInicioSesion.passwordIni.classList.add("errorForm");
+    } else {
+        formInicioSesion.passwordIni.classList.remove("errorForm");
+    }
+
+    // --------------------------------------------------------------
+    // COMPROBACIÓN FINAL
+    if (bValido) { // Si todo OK
+        inciarSesion();
+    } else {
+        alert(sErrores);
+    }
+}
+
+    
+function inciarSesion(){
     var oInicioSesion = {
         email: formInicioSesion.emailIni.value.trim(),
         password: formInicioSesion.passwordIni.value.trim()
@@ -460,7 +659,7 @@ $("#btnInicioSesion").click(function(){
     var sParametros = "datosSesion="+JSON.stringify(oInicioSesion);
 
     $.post("inicioSesion/inicioSesion.php", sParametros, respuestaInicioSesion, "json");
-});
+}
 
 function respuestaInicioSesion(oDatos,sStatus,oXHR){
     if(oDatos.error){
@@ -474,9 +673,13 @@ function respuestaInicioSesion(oDatos,sStatus,oXHR){
     }
 }
 
-// **************************************************************
+
+
+
+
+// *******************************************************************************************************************************************************
 // CÓDIGO PARA CERRAR SESIÓN
-// **************************************************************
+// *******************************************************************************************************************************************************
 function cerrarSesion(){
     if(sessionStorage['correo'] != undefined){
         if(confirm("¿Desea cerrar la sesión?")){
